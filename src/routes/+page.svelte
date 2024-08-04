@@ -1,5 +1,11 @@
-<script>
-	import { TreeView, TreeViewItem } from "@skeletonlabs/skeleton";
+<script lang="ts">
+	import { TreeView, TreeViewItem } from "@skeletonlabs/skeleton"
+	import type { PageData } from "./$types"
+
+	export let data: PageData
+	console.dir(data.categories)
+
+	$: ({ categories } = data)
 </script>
 
 <main class="col-span-6">
@@ -13,52 +19,25 @@
 </main>
 
 <TreeView>
-	<TreeViewItem>
-		Bulbs
-		<svelte:fragment slot="children">
+	{#each categories as category}
+		{#if category.crops.length >= 1}
 			<TreeViewItem>
-				Onions
+				{category.name}
 				<svelte:fragment slot="children">
-					<TreeViewItem>
-						Red
-					</TreeViewItem>
-					<TreeViewItem>
-						Yellow
-					</TreeViewItem>
+					{#each category.crops as crop}
+						<TreeViewItem>
+							{crop.name}
+							<svelte:fragment slot="children">
+								{#each crop.types as type}
+									<TreeViewItem>
+										{type.name}
+									</TreeViewItem>
+								{/each}
+							</svelte:fragment>
+						</TreeViewItem>
+					{/each}
 				</svelte:fragment>
 			</TreeViewItem>
-			<TreeViewItem>
-				Garlic
-				<svelte:fragment slot="children">
-					<TreeViewItem>
-						Hardneck
-					</TreeViewItem>
-					<TreeViewItem>
-						Softneck
-					</TreeViewItem>
-				</svelte:fragment>
-			</TreeViewItem>
-		</svelte:fragment>
-	</TreeViewItem>
-	<TreeViewItem>
-		Tubers
-		<svelte:fragment slot="children">
-			<TreeViewItem>
-				Potato
-				<svelte:fragment slot="children">
-					<TreeViewItem>
-						First earlies
-					</TreeViewItem>
-
-					<TreeViewItem>
-						Second earlies
-					</TreeViewItem>
-
-					<TreeViewItem>
-						Main crop
-					</TreeViewItem>
-				</svelte:fragment>
-			</TreeViewItem>
-		</svelte:fragment>
-	</TreeViewItem>
+		{/if}
+	{/each}
 </TreeView>
