@@ -14,9 +14,14 @@ datasource db {
 }
 
 model Category {
-  id    Int @id @default(autoincrement())
-  name  String
-  crops Crop[]
+  id          Int @id @default(autoincrement())
+  name        String
+  crops       Crop[]
+  description String
+  grow        String
+  store       String
+  preserve    String
+  cook        String
 }
 
 model Crop {
@@ -25,11 +30,21 @@ model Crop {
   categoryId  Int
   category    Category @relation(references: [id], fields: [categoryId], onDelete: Cascade)
   types       Type[]
+  description String
+  grow        String
+  store       String
+  preserve    String
+  cook        String
 }
 
 model Type {
-  id      Int @id @default(autoincrement())
-  name    String
-  cropId  Int
-  crop    Crop @relation(references: [id], fields: [cropId], onDelete: Cascade)
+  id          Int @id @default(autoincrement())
+  name        String
+  cropId      Int
+  crop        Crop @relation(references: [id], fields: [cropId], onDelete: Cascade)
+  description String
+  grow        String
+  store       String
+  preserve    String
+  cook        String
 }

@@ -6,9 +6,26 @@
 
 	export let data: PageData
 
+
 	$: ({ categories } = data)
 
 	let tabSet: number = 0
+
+	$: selection = {}
+
+	const filterSelection = async (
+		categoryName: string, cropName?: string, typeName?: string
+	) => {
+		selection = categories.filter(category => category.name === categoryName)[0]
+
+		if (cropName) {
+			selection = selection.crops.filter(crop => crop.name === cropName)[0]
+
+			if (typeName) {
+				selection = selection.types.filter(type => type.name === typeName)[0]
+			}
+		}
+	}
 </script>
 
 <PageStructure>
@@ -16,15 +33,15 @@
 		<TreeView>
 			{#each categories as category}
 				{#if category.crops.length >= 1}
-					<TreeViewItem>
+					<TreeViewItem on:click={filterSelection(category.name)}>
 						{category.name}
 						<svelte:fragment slot="children">
 							{#each category.crops as crop}
-								<TreeViewItem>
+								<TreeViewItem on:click={filterSelection(category.name, crop.name)}>
 									{crop.name}
 									<svelte:fragment slot="children">
 										{#each crop.types as type}
-											<TreeViewItem>
+											<TreeViewItem on:click={filterSelection(category.name, crop.name, type.name)}>
 												{type.name}
 											</TreeViewItem>
 										{/each}
@@ -55,7 +72,22 @@
 				Preserving
 			</Tab>
 			<svelte:fragment slot="panel">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt maiores vero neque in nisi debitis ratione illo officiis itaque, voluptatum voluptatibus aperiam error ut animi quas excepturi laudantium quasi aliquam.
+				{#if selection.description === undefined}
+					<p>Select an item from the list</p>
+				{:else}
+					{#if tabSet == 0}
+						{selection.description}
+					{:else if tabSet === 1}
+						{selection.grow}
+					{:else if tabSet === 2}
+						{selection.store}
+					{:else if tabSet === 3}
+						{selection.cook}
+					{:else if tabSet === 4}
+						{selection.preserve}
+					{/if}
+				{/if}
+				
 			</svelte:fragment>
 		</TabGroup>
 	</div>
