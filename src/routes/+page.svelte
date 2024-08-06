@@ -6,7 +6,6 @@
 
 	export let data: PageData
 
-
 	$: ({ categories } = data)
 
 	let tabSet: number = 0
@@ -29,6 +28,7 @@
 </script>
 
 <PageStructure>
+	
   <div slot="aside">
 		<TreeView>
 			{#each categories as category}
@@ -91,4 +91,6 @@
 			</svelte:fragment>
 		</TabGroup>
 	</div>
+
+	
 </PageStructure>
