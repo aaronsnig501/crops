@@ -1,15 +1,5 @@
 <script lang="ts">
-	import { enhance } from "$app/forms"
 	import PageStructure from "$lib/client/components/page/PageStructure.svelte"
-  import { MarkdownEditor, Carta, Markdown } from "carta-md"
-	import "carta-md/default.css"
-	import DOMPurify from "isomorphic-dompurify"
-
-  const carta = new Carta(
-    {
-      sanitizer: DOMPurify.sanitize,
-    }
-  )
 
   const postData = {
     level: "",
@@ -33,33 +23,47 @@
 </script>
 
 <PageStructure>
-  <div slot="content">
+  <div slot="content" class="w-3/4">
     <form on:submit|preventDefault={handleCreateFormSubmission}>
-      Level:
-      <select bind:value={postData.level}>
-        <option value="category" selected>Category</option>
-        <option value="crop">Crop</option>
-        <option value="type">Type</option>
-      </select>
+      <label class="label">
+        <span>Level:</span>
+        <select class="select" bind:value={postData.level}>
+          <option value="category" selected>Category</option>
+          <option value="crop">Crop</option>
+          <option value="type">Type</option>
+        </select>
+      </label>
 
-      Name:
-      <input bind:value={postData.name} name="name" id="name" />
-      Description:
-      <MarkdownEditor {carta} bind:value={postData.description} />
+      <label class="label mt-4">
+        <span>Name:</span>
+        <input class="input" bind:value={postData.name} name="name" id="name" />
+      </label>
+      
+      <label class="label mt-4">
+        <span>Description:</span>
+        <textarea class="textarea" bind:value={postData.description}></textarea>
+      </label>
 
-      Growing:
-      <MarkdownEditor {carta} bind:value={postData.growing} />
+      <label class="label mt-4">
+        <span>Growing:</span>
+        <textarea class="textarea" bind:value={postData.growing}></textarea>
+      </label>
 
-      Storing:
-      <MarkdownEditor {carta} bind:value={postData.storing} />
+      <label class="label mt-4">
+        <span>Storing:</span>
+        <textarea class="textarea" bind:value={postData.storing}></textarea>
+      </label>
 
-      Cooking:
-      <MarkdownEditor {carta} bind:value={postData.cooking} />
+      <label class="label mt-4">
+        <span>Cooking:</span>
+        <textarea class="textarea" bind:value={postData.cooking}></textarea>
+      </label>
+      <label class="label mt-4">
+        <span>Preserving:</span>
+        <textarea class="textarea" bind:value={postData.preserving}></textarea>
+      </label>
 
-      Preserving:
-      <MarkdownEditor {carta} bind:value={postData.preserving} />
-
-      <button>Submit</button>
+      <button class="btn bg-gradient-to-br variant-gradient-primary-secondary mt-4">Submit</button>
     </form>
   </div>
 </PageStructure>
