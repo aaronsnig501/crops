@@ -34,7 +34,7 @@
 			{#each categories as category}
 				{#if category.crops.length >= 1}
 					<TreeViewItem on:click={filterSelection(category.name)}>
-						{category.name}
+						{category.name} 
 						<svelte:fragment slot="children">
 							{#each category.crops as crop}
 								<TreeViewItem on:click={filterSelection(category.name, crop.name)}>
@@ -45,13 +45,22 @@
 												{type.name}
 											</TreeViewItem>
 										{/each}
+										<TreeViewItem>
+											<a href="/type/{crop.id}/create">Add new type</a>
+										</TreeViewItem>
 									</svelte:fragment>
 								</TreeViewItem>
 							{/each}
+							<TreeViewItem>
+								<a href="/crop/{category.id}/create">Add new crop</a>
+							</TreeViewItem>
 						</svelte:fragment>
 					</TreeViewItem>
 				{/if}
 			{/each}
+			<TreeViewItem>
+				<a href="/category/create">Add new category</a>
+			</TreeViewItem>
 		</TreeView>
 	</div>
 	<div slot="content">
