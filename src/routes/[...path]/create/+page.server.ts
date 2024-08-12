@@ -1,5 +1,6 @@
 import { redirect } from "@sveltejs/kit"
 import type { Actions } from "./$types"
+import { prisma } from "$lib/server/prisma"
 
 export const actions: Actions = {
   createNewEntry: async ({ request }) => {
